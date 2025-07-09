@@ -1,173 +1,157 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-bs-theme="light">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Aplikasi Keuangan Pribadi</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+        integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+
     <style>
+        /* Custom CSS untuk sedikit penyesuaian */
         body {
-            font-family: sans-serif;
-            margin: 20px;
+            padding-top: 20px;
+            padding-bottom: 20px;
         }
 
-        .container {
-            max-width: 960px;
-            margin: 0 auto;
+        .navbar-brand {
+            font-weight: bold;
         }
 
-        .header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 20px;
-        }
-
-        .nav a {
-            margin-right: 15px;
-            text-decoration: none;
-            color: blue;
-        }
-
-        .alert {
-            padding: 10px;
-            margin-bottom: 20px;
-            border-radius: 5px;
-        }
-
-        .alert-success {
-            background-color: #d4edda;
-            color: #155724;
-            border-color: #c3e6cb;
-        }
-
-        .alert-danger {
-            background-color: #f8d7da;
-            color: #721c24;
-            border-color: #f5c6cb;
-        }
-
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 20px;
-        }
-
-        th,
-        td {
-            border: 1px solid #ddd;
-            padding: 8px;
-            text-align: left;
-        }
-
-        th {
-            background-color: #f2f2f2;
-        }
-
-        .btn {
-            padding: 8px 12px;
-            border-radius: 5px;
-            text-decoration: none;
-            color: white;
-            background-color: #007bff;
-            border: none;
-            cursor: pointer;
-        }
-
-        .btn-success {
-            background-color: #28a745;
-        }
-
-        .btn-warning {
-            background-color: #ffc107;
-            color: black;
-        }
-
-        .btn-danger {
-            background-color: #dc3545;
-        }
-
-        .form-group {
-            margin-bottom: 15px;
-        }
-
-        .form-group label {
-            display: block;
-            margin-bottom: 5px;
-        }
-
-        .form-control {
-            width: 100%;
-            padding: 8px;
-            border: 1px solid #ddd;
-            border-radius: 4px;
-            box-sizing: border-box;
-        }
-
-        .auth-links {
-            display: flex;
-            align-items: center;
-        }
-
-        .auth-links form {
-            margin-left: 15px;
-        }
-
-        .auth-links button {
-            background: none;
-            border: none;
-            color: blue;
-            cursor: pointer;
-            text-decoration: underline;
-            font-size: inherit;
-            padding: 0;
+        .footer {
+            margin-top: 40px;
+            padding-top: 20px;
+            border-top: 1px solid var(--bs-border-color);
+            color: var(--bs-secondary-color);
         }
     </style>
 </head>
 
 <body>
     <div class="container">
-        <div class="header">
-            <h1>Aplikasi Keuangan Pribadi</h1>
-            <nav class="nav">
-                @auth
-                    <a href="{{ route('banks.index') }}">Bank/Sumber</a>
-                    <a href="{{ route('incomes.index') }}">Pemasukan</a>
-                    <a href="{{ route('expenses.index') }}">Pengeluaran</a>
-                @endauth
-            </nav>
-            <div class="auth-links">
-                @auth
-                    <span>Halo, {{ Auth::user()->name }}!</span>
-                    <form method="POST" action="{{ route('logout') }}">
-                        @csrf
-                        <button type="submit">Logout</button>
-                    </form>
-                @else
-                    <a href="{{ route('login') }}">Login</a>
-                    <a href="{{ route('register') }}">Register</a>
-                @endauth
+        <nav class="navbar navbar-expand-lg bg-body-tertiary rounded-3 mb-4 shadow-sm">
+            <div class="container-fluid">
+                <a class="navbar-brand" href="{{ url('/') }}">Keuangan Pribadi</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                    aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                        @auth
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ route('banks.index') }}">Bank/Sumber</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ route('incomes.index') }}">Pemasukan</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ route('expenses.index') }}">Pengeluaran</a>
+                            </li>
+                        @endauth
+                    </ul>
+                    <div class="d-flex align-items-center">
+                        <button class="btn btn-link nav-link text-decoration-none me-3" id="theme-toggle" type="button"
+                            aria-label="Toggle dark mode">
+                            <i class="fas fa-moon d-none"></i> <i class="fas fa-sun d-none"></i> </button>
+                        @auth
+                            <span class="navbar-text me-3">
+                                Halo, {{ Auth::user()->name }}!
+                            </span>
+                            <form method="POST" action="{{ route('logout') }}">
+                                @csrf
+                                <button type="submit" class="btn btn-outline-danger btn-sm">Logout</button>
+                            </form>
+                        @else
+                            <a href="{{ route('login') }}" class="btn btn-outline-primary btn-sm me-2">Login</a>
+                            <a href="{{ route('register') }}" class="btn btn-primary btn-sm">Register</a>
+                        @endauth
+                    </div>
+                </div>
             </div>
-        </div>
+        </nav>
 
         @if (session('success'))
-            <div class="alert alert-success">
+            <div class="alert alert-success alert-dismissible fade show" role="alert">
                 {{ session('success') }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
             </div>
         @endif
 
         @if ($errors->any())
-            <div class="alert alert-danger">
+            <div class="alert alert-danger alert-dismissible fade show" role="alert">
                 <ul>
                     @foreach ($errors->all() as $error)
                         <li>{{ $error }}</li>
                     @endforeach
                 </ul>
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
             </div>
         @endif
 
-        @yield('content')
+        <main class="py-4">
+            @yield('content')
+        </main>
+
+        <footer class="footer text-center mt-5 py-3">
+            <p>&copy; {{ date('Y') }} Aplikasi Keuangan Pribadi. Dibuat dengan ❤️.</p>
+        </footer>
     </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous">
+    </script>
+
+    <script>
+        const themeToggle = document.getElementById('theme-toggle');
+        const htmlElement = document.documentElement; // the <html> tag
+        const sunIcon = themeToggle.querySelector('.fa-sun');
+        const moonIcon = themeToggle.querySelector('.fa-moon');
+
+        // Function to set the theme
+        const setTheme = (theme) => {
+            htmlElement.setAttribute('data-bs-theme', theme);
+            localStorage.setItem('theme', theme); // Save preference
+            updateThemeIcons(theme);
+        };
+
+        // Function to update the icons based on the current theme
+        const updateThemeIcons = (currentTheme) => {
+            if (currentTheme === 'dark') {
+                sunIcon.classList.remove('d-none');
+                moonIcon.classList.add('d-none');
+            } else {
+                sunIcon.classList.add('d-none');
+                moonIcon.classList.remove('d-none');
+            }
+        };
+
+        // On page load, apply the stored theme or default to light
+        document.addEventListener('DOMContentLoaded', () => {
+            const storedTheme = localStorage.getItem('theme');
+            if (storedTheme) {
+                setTheme(storedTheme);
+            } else {
+                // Check user's system preference (optional)
+                if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+                    setTheme('dark');
+                } else {
+                    setTheme('light');
+                }
+            }
+        });
+
+        // Toggle theme on button click
+        themeToggle.addEventListener('click', () => {
+            const currentTheme = htmlElement.getAttribute('data-bs-theme');
+            const newTheme = currentTheme === 'light' ? 'dark' : 'light';
+            setTheme(newTheme);
+        });
+    </script>
 </body>
 
 </html>
