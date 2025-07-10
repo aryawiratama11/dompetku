@@ -60,7 +60,7 @@
                             <i class="fas fa-moon d-none"></i> <i class="fas fa-sun d-none"></i> </button>
                         @auth
                             <span class="navbar-text me-3">
-                                Halo, {{ Auth::user()->name }}!
+                                Halo, {{ Auth::user()->name }}
                             </span>
                             <form method="POST" action="{{ route('logout') }}">
                                 @csrf
