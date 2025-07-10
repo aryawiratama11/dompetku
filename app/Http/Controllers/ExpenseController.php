@@ -36,7 +36,14 @@ class ExpenseController extends Controller
                 return back()->withErrors(['amount' => 'Saldo tidak mencukupi untuk pengeluaran ini.']);
             }
 
-            Expense::create($request->all());
+            Expense::insert([
+                'bank_id' => $request->bank_id,
+                'amount' => $request->amount,
+                'description' => $request->description,
+                'transaction_date' => $request->transaction_date,
+                'created_at' => now(),
+                'updated_at' => now(),
+            ]);
 
             $bank->balance -= $request->amount;
             $bank->save();
@@ -75,7 +82,15 @@ class ExpenseController extends Controller
         ]);
 
         DB::transaction(function () use ($request) {
-            Expense::create($request->all());
+            Expense::insert([
+                'parent_id' => $request->parent_id,
+                'bank_id' => $request->bank_id,
+                'amount' => $request->amount,
+                'description' => $request->description,
+                'transaction_date' => $request->transaction_date,
+                'created_at' => now(),
+                'updated_at' => now(),
+            ]);
         });
 
         return redirect()->route('expenses.edit-detail', $request->parent_id)->with('success', 'Pengeluaran berhasil ditambahkan!');
