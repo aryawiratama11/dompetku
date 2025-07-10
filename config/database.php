@@ -76,6 +76,9 @@ return [
             'prefix_indexes' => true,
             'search_path' => 'public',
             'sslmode' => env('DB_SSLMODE', 'prefer'),
+            'options' => [ // This is where Neon's specific options go
+                'options' => env('DB_PGSQL_OPTIONS'), // Reads from DB_PGSQL_OPTIONS
+            ],
         ],
 
         'sqlsrv' => [
