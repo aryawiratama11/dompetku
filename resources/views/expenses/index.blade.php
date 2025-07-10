@@ -25,6 +25,7 @@
                         <td>Rp {{ number_format($expense->amount, 2, ',', '.') }}</td>
                         <td>{{ $expense->description ?? '-' }}</td>
                         <td>
+                            <a href="{{ route('expenses.edit-detail', $expense->id) }}" class="btn btn-info">Detail</a>
                             <a href="{{ route('expenses.edit', $expense->id) }}" class="btn btn-warning">Edit</a>
                             <form action="{{ route('expenses.destroy', $expense->id) }}" method="POST"
                                 style="display:inline-block;">

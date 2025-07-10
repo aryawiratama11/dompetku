@@ -42,6 +42,9 @@ Route::middleware('auth')->group(function () {
     Route::resource('banks', BankController::class);
     Route::resource('incomes', IncomeController::class);
     Route::resource('expenses', ExpenseController::class);
+    Route::get('expenses/{expense}/edit-detail', [ExpenseController::class, 'editDetail'])->name('expenses.edit-detail');
+    Route::get('expenses/{expense}/create-detail', [ExpenseController::class, 'createDetail'])->name('expenses.create-detail');
+    Route::post('expenses/store-detail', [ExpenseController::class, 'storeDetail'])->name('expenses.store-detail');
 });
 
 require __DIR__ . '/auth.php';

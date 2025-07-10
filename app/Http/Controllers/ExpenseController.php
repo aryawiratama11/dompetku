@@ -11,7 +11,7 @@ class ExpenseController extends Controller
 {
     public function index()
     {
-        $expenses = Expense::with('bank')->latest()->get();
+        $expenses = Expense::with('bank')->where('parent_id', null)->latest()->get();
         return view('expenses.index', compact('expenses'));
     }
 
@@ -54,6 +54,31 @@ class ExpenseController extends Controller
     {
         $banks = Bank::all();
         return view('expenses.edit', compact('expense', 'banks'));
+    }
+    public function editDetail(Expense $expense)
+    {
+        // $banks = Bank::all();
+        $expenses = Expense::with('bank')->where('parent_id', $expense->id)->latest()->get();
+        return view('expenses.detail.edit-detail', compact('expense', 'expenses'));
+    }
+    public function createDetail(Expense $expense)
+    {
+        $banks = Bank::all();
+        return view('expenses.detail.create-detail', compact('banks', 'expense'));
+    }
+    public function storeDetail(Request $request)
+    {
+        $request->validate([
+            'amount' => 'required|numeric|min:0.01',
+            'description' => 'nullable|string|max:255',
+            'transaction_date' => 'required|date',
+        ]);
+
+        DB::transaction(function () use ($request) {
+            Expense::create($request->all());
+        });
+
+        return redirect()->route('expenses.edit-detail', $request->parent_id)->with('success', 'Pengeluaran berhasil ditambahkan!');
     }
 
     public function update(Request $request, Expense $expense)
