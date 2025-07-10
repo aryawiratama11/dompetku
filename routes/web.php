@@ -35,6 +35,10 @@ Route::middleware('auth')->group(function () {
     })->name('dashboard');
 
     // Rute aplikasi keuangan pribadi Anda
+    // Route::resource('banks', BankController::class);
+    // Route::resource('incomes', IncomeController::class);
+    // Route::resource('expenses', ExpenseController::class);
+    //
     Route::resource('banks', BankController::class);
     Route::resource('incomes', IncomeController::class);
     Route::resource('expenses', ExpenseController::class);
